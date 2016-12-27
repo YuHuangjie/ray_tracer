@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{11e2ac51-28cd-499d-a535-ab42c0e0bf26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="camera">
+      <UniqueIdentifier>{2135b5f4-4926-4016-b92b-e974398ba781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="image">
+      <UniqueIdentifier>{9d0d1687-2c6b-41a1-8b8f-b91f50a8d8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\primitive">
+      <UniqueIdentifier>{04dec31a-47c2-42d7-9118-2dc10c4401a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="image\lw_image">
+      <UniqueIdentifier>{c0a79a30-36e0-4b36-8bd7-c6faa02353ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\light">
+      <UniqueIdentifier>{9e332f1b-c430-45c3-ade4-6dee65e43185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{a674965a-f33c-4236-87d0-d2bf332d8d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\phong">
+      <UniqueIdentifier>{afc8f464-6fe8-46c5-9592-55604e04c359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\renderer">
+      <UniqueIdentifier>{7a3b84c6-8de1-4888-b6c0-2cc008997e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\basis">
+      <UniqueIdentifier>{e2c95bc9-3ef1-4bb0-9185-3d7985dbbc20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\mesh">
+      <UniqueIdentifier>{536c625f-8eaf-4588-ae16-05d382043bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="acceleration">
+      <UniqueIdentifier>{c6ca8396-10f7-4d7c-825b-fe49e6007547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="acceleration\kd_tree">
+      <UniqueIdentifier>{1922f146-6d5f-48cb-a090-75fece9f7180}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment map">
+      <UniqueIdentifier>{28592b3d-b50f-4117-bcab-7a58d994ebc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment map\quad_tree">
+      <UniqueIdentifier>{901f685f-2c9a-4803-959e-81d7728329b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment map\cubemap">
+      <UniqueIdentifier>{7805773e-89fe-4f8d-847f-0f01f042b0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\obj_loader">
+      <UniqueIdentifier>{8510d166-363c-4adc-bdfa-a2ccb00314cf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Color.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>geometry\light</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.h">
+      <Filter>geometry\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>geometry\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>geometry\light</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>geometry\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>render\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BBox.h">
+      <Filter>acceleration\kd_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="KDTree.h">
+      <Filter>acceleration\kd_tree</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_parser\list.h">
+      <Filter>geometry\obj_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_parser\obj_parser.h">
+      <Filter>geometry\obj_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_parser\objLoader.h">
+      <Filter>geometry\obj_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_parser\string_extra.h">
+      <Filter>geometry\obj_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="lw_image\stb_image.h">
+      <Filter>image\lw_image</Filter>
+    </ClInclude>
+    <ClInclude Include="lw_image\stb_image_write.h">
+      <Filter>image\lw_image</Filter>
+    </ClInclude>
+    <ClInclude Include="lw_image\lw_color.h">
+      <Filter>image\lw_image</Filter>
+    </ClInclude>
+    <ClInclude Include="lw_image\lw_common.h">
+      <Filter>image\lw_image</Filter>
+    </ClInclude>
+    <ClInclude Include="lw_image\lw_image.h">
+      <Filter>image\lw_image</Filter>
+    </ClInclude>
+    <ClInclude Include="lw_image\lw_path.h">
+      <Filter>image\lw_image</Filter>
+    </ClInclude>
+    <ClInclude Include="Phong.h">
+      <Filter>render\phong</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>geometry\basis</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection.h">
+      <Filter>geometry\basis</Filter>
+    </ClInclude>
+    <ClInclude Include="Point4.h">
+      <Filter>geometry\basis</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>geometry\basis</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveType.h">
+      <Filter>geometry\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="InfinitePlane.h">
+      <Filter>geometry\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>geometry\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="LightType.h">
+      <Filter>geometry\light</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaLight.h">
+      <Filter>geometry\light</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.h">
+      <Filter>environment map</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>image</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h" />
+    <ClInclude Include="Assistant.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>geometry\light</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitive.cpp">
+      <Filter>geometry\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>geometry\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>geometry\light</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>geometry\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>render\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="BBox.cpp">
+      <Filter>acceleration\kd_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_parser\list.cpp">
+      <Filter>geometry\obj_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_parser\obj_parser.cpp">
+      <Filter>geometry\obj_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_parser\objLoader.cpp">
+      <Filter>geometry\obj_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_parser\string_extra.cpp">
+      <Filter>geometry\obj_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="lw_image\lw_color.cpp">
+      <Filter>image\lw_image</Filter>
+    </ClCompile>
+    <ClCompile Include="lw_image\lw_image.cpp">
+      <Filter>image\lw_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Phong.cpp">
+      <Filter>render\phong</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection.cpp">
+      <Filter>geometry\basis</Filter>
+    </ClCompile>
+    <ClCompile Include="Point4.cpp">
+      <Filter>geometry\basis</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>geometry\basis</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>geometry\basis</Filter>
+    </ClCompile>
+    <ClCompile Include="InfinitePlane.cpp">
+      <Filter>geometry\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaLight.cpp">
+      <Filter>geometry\light</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimitiveType.cpp">
+      <Filter>geometry\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="LightType.cpp">
+      <Filter>geometry\light</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>image</Filter>
+    </ClCompile>
+    <ClCompile Include="Assistant.cpp" />
+    <ClCompile Include="mesh.cpp">
+      <Filter>geometry\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="KDTree.cpp">
+      <Filter>acceleration\kd_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="main_mesh_renderer.cpp" />
+  </ItemGroup>
+</Project>
