@@ -14,7 +14,7 @@ public:
 	PointLight();
 	PointLight(const Point4 &pos);
 
-	void Illuminate(const Point4 &, Vector4 &, Color &, Color &, Color &, double &) const;
+	void Illuminate(const Point4 &, Vector4 &, Color &, double &) const;
 
 	void SetPosition(const Point4 &pos);
 	Point4 GetPosition(void) const;

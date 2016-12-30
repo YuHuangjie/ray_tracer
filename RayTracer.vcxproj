@@ -147,6 +147,7 @@
     <ClInclude Include="BBox.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="CookTorrance.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Assistant.h" />
     <ClInclude Include="Intersection.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Assistant.cpp" />
+    <ClCompile Include="CookTorrance.cpp" />
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="KDTree.cpp" />
     <ClCompile Include="Light.cpp" />

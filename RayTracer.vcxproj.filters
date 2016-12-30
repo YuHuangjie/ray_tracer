@@ -52,6 +52,9 @@
     <Filter Include="geometry\obj_loader">
       <UniqueIdentifier>{8510d166-363c-4adc-bdfa-a2ccb00314cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="render\cook_torrance">
+      <UniqueIdentifier>{e422e71d-951d-4755-8104-99641edf3baf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -152,6 +155,9 @@
     </ClInclude>
     <ClInclude Include="Define.h" />
     <ClInclude Include="Assistant.h" />
+    <ClInclude Include="CookTorrance.h">
+      <Filter>render\cook_torrance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -235,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="KDTree.cpp">
       <Filter>acceleration\kd_tree</Filter>
+    </ClCompile>
+    <ClCompile Include="CookTorrance.cpp">
+      <Filter>render\cook_torrance</Filter>
     </ClCompile>
     <ClCompile Include="main_mesh_renderer.cpp" />
   </ItemGroup>

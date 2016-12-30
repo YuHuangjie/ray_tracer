@@ -33,6 +33,12 @@ public:
 	virtual void SetReflection(const double r);
 	virtual double GetReflection(void) const;
 
+	virtual void SetRoughness(const double r);
+	virtual double GetRoughness(void) const;
+
+	virtual void SetFresnelReflection(const double);
+	virtual double GetFresnelReflection(void) const;
+
 	virtual PrimitiveType GetType(void) const;
 
 
@@ -42,6 +48,8 @@ protected:
 	Color ks;	// specular coefficient
 	uint16_t ns;	// sharpness of specular reflection
 	double r;	// reflection amount
+	double roughness;	// 0 : smooth, 1: rough
+	double fresnel;		// fresnel reflectance at normal incidence
 
 	PrimitiveType type;
 

@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "Assistant.h"
 #include "Phong.h"
+#include "CookTorrance.h"
 #include "Define.h"
 
 Renderer::Renderer()
@@ -57,7 +58,7 @@ Color Renderer::RenderRay(
 
 	if (!globalLighting) {
 		// ambient simulates global diffuse
-		ret += Phong::GetColor(-ray.GetDirection(), inter, lights, objects, true);
+		ret += CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, true);
 
 		// recursive tracing on reflected ray
 		Ray reflect;
@@ -70,7 +71,7 @@ Color Renderer::RenderRay(
 	}
 	else {
 		// local illumination
-		ret += Phong::GetColor(-ray.GetDirection(), inter, lights, objects, false);
+		ret += CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, false);
 
 		// global illumination
 

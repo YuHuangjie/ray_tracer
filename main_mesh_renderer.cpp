@@ -11,12 +11,12 @@
 int main()
 {
 	Camera camera(Point4(0, 5, 8), Vector4(0, 1, 0), Vector4(0, 0, 1));
-	Renderer renderer(2);
+	Renderer renderer(1);
 	vector< shared_ptr<const Primitive> > objects;
 	vector< shared_ptr<const Light> > lights;
 
 	// set camera resolution
-	camera.SetResolution(640, 480);
+	camera.SetResolution(320, 240);
 
 	shared_ptr<InfinitePlane> left = make_shared<InfinitePlane>(Point4(-8, 0, 0), Vector4(1, 0, 0));
 	shared_ptr<InfinitePlane> right = make_shared<InfinitePlane>(Point4(8, 0, 0), Vector4(-1, 0, 0));
@@ -31,6 +31,7 @@ int main()
 	bot->SetSpecular(Color(0, 0, 0));
 	bot->SetSpecularExp(128);
 	bot->SetReflection(0.5);
+	bot->SetRoughness(0.8);
 	objects.push_back(bot);
 
 	// left plane
@@ -39,6 +40,7 @@ int main()
 	left->SetSpecular(Color(0, 0, 0));
 	left->SetSpecularExp(128);
 	left->SetReflection(0.5);
+	left->SetRoughness(0.8);
 	objects.push_back(left);
 
 	// back plane
@@ -47,6 +49,7 @@ int main()
 	back->SetSpecular(Color(0, 0, 0));
 	back->SetSpecularExp(128);
 	back->SetReflection(0.5);
+	back->SetRoughness(0.8);
 	objects.push_back(back);
 
 	// right plane
@@ -55,6 +58,7 @@ int main()
 	right->SetSpecular(Color(0, 0, 0));
 	right->SetSpecularExp(128);
 	right->SetReflection(0.5);
+	right->SetRoughness(0.8);
 	objects.push_back(right);
 
 	// top plane
@@ -63,17 +67,16 @@ int main()
 	top->SetSpecular(Color(0, 0, 0));
 	top->SetSpecularExp(128);
 	top->SetReflection(0.5);
+	top->SetRoughness(0.8);
 	objects.push_back(top);
 
 	// add a .obj 
+	dragon->SetRoughness(0.1);
 	objects.push_back(dragon);
 
 	// add a point light
 	shared_ptr<PointLight> pl = make_shared<PointLight>(camera.GetEye());
-	pl->SetAmbient(Color(0.1, 0.1, 0.1));
-	pl->SetDiffuse(Color(0.7, 0.7, 0.7));
-	pl->SetSpecular(Color(0.7, 0.7, 0.7));
-	pl->SetIntensity(60);
+	pl->SetIntensity(Color(70, 70, 70));
 	lights.push_back(pl);
 
 	/* main render procedure */
@@ -100,7 +103,7 @@ int main()
 		cout << w << endl;
 	}
 
-	photo.Save("result/mesh render.png");
+	photo.Save("result/cook_torrance_mesh_render.png");
 
 	return 0;
 }

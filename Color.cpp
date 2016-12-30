@@ -86,11 +86,11 @@ Color8 Color::Squeeze(const Color &ref)
 	return Color8(r, g, b);
 }
 
-Color Color::Clamp(void)
+Color Color::Clamp(Color &c/* = Color(1,1,1)*/)
 {
-	double r = std::min(R, 1.0);
-	double g = std::min(G, 1.0);
-	double b = std::min(B, 1.0);
+	double r = std::min(R, c.R);
+	double g = std::min(G, c.G);
+	double b = std::min(B, c.B);
 	return Color(r, g, b);
 }
 

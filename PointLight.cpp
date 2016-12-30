@@ -13,17 +13,16 @@ PointLight::PointLight(const Point4 &pos)
 void PointLight::Illuminate(
 	const Point4 &P, 
 	Vector4 &lightDir, 
-	Color &ambientIntensity,
-	Color &diffuseIntensity,
-	Color &specularIntensity,
+	Color &radians,
 	double &dist) const
 {
 	lightDir = (P - position);
 	dist = lightDir.Norm();
 	lightDir.Normalize();
-	ambientIntensity = ambient * intensity / (4 * PI * dist);
-	diffuseIntensity = diffuse * intensity / (4 * PI * dist);
-	specularIntensity = specular * intensity / (4 * PI * dist);
+	//ambientIntensity = ambient * intensity / (4 * PI * dist);
+	//diffuseIntensity = diffuse * intensity / (4 * PI * dist);
+	//specularIntensity = specular * intensity / (4 * PI * dist);
+	radians = intensity / (4 * PI * dist);
 }
 
 void PointLight::SetPosition(const Point4 &pos)
@@ -39,8 +38,6 @@ Point4 PointLight::GetPosition(void) const
 ostream& operator<<(ostream &os, const PointLight &pl)
 {
 	os << "position: " << pl.GetPosition() << endl
-		<< "ambient: " << pl.GetAmbient() << endl
-		<< "diffuse: " << pl.GetDiffuse() << endl
-		<< "specular: " << pl.GetSpecular() << endl;
+		<< "intensity: " << pl.GetIntensity() << endl;
 	return os;
 }

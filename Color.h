@@ -36,7 +36,7 @@ public:
 	Color& operator+=(const Color &);
 	bool operator<(const Color &) const;
 
-	Color Clamp(void);
+	Color Clamp(Color &c = Color(1, 1, 1));
 	Color8 Squeeze(const Color &ref);
 	static Color Threshold(const unique_ptr<Color[]> &, size_t size);
 

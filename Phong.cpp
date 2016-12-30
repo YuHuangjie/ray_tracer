@@ -7,7 +7,7 @@ Color Phong::GetColor(
 	const Intersection &inter,
 	const vector< shared_ptr<const Light> > &lights,
 	const vector< shared_ptr<const Primitive> > &objects,
-	bool primary)
+	bool useAmbient)
 {
 	// check intersection is valid
 	if (inter.GetPrimitive() == nullptr) {
@@ -19,22 +19,20 @@ Color Phong::GetColor(
 	const Vector4 N = inter.GetNormal();
 	const shared_ptr<const Primitive> object = inter.GetPrimitive();
 	const Vector4 V = incidentDir;
-	Ray L;
 	double diffuseScale, specularScale;
 
 	// direct lighting
 	vector< shared_ptr<const Light> >::const_iterator light;
-	Color ambientIntensity, diffuseIntensity, specularIntensity;
+	Color lightRadiance;
 	Vector4 lightDir;
 	double distL2P;
 	for(light = lights.cbegin(); light != lights.cend(); ++light) {
 
-		(*light)->Illuminate(p, lightDir, ambientIntensity
-			, diffuseIntensity, specularIntensity, distL2P);
+		(*light)->Illuminate(p, lightDir, lightRadiance, distL2P);
 
 		// ambient
-		if (primary) {
-			ret += ambientIntensity * object->GetAmbient();
+		if (useAmbient) {
+			ret += lightRadiance * object->GetAmbient();
 		}
 
 		// shadow ray test
@@ -44,14 +42,14 @@ Color Phong::GetColor(
 		if (visible) {
 			// diffuse 
 			diffuseScale = std::max(0.0, N * (-lightDir));
-			ret += diffuseIntensity * object->GetDiffuse() * diffuseScale;
+			ret += lightRadiance * object->GetDiffuse() * diffuseScale;
 
 			// specular
 			Vector4 H = (-lightDir + V);
 			H.Normalize();
 			specularScale = std::max(0.0, N * H);
 			specularScale = pow(specularScale, object->GetSpecularExp());
-			ret += specularIntensity * object->GetSpecular() * specularScale;
+			ret += lightRadiance * object->GetSpecular() * specularScale;
 		}
 	}
 

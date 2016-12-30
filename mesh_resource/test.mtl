@@ -2,9 +2,9 @@ newmtl red_material
 # ambient values
 Ka  0.1 0 0
 # diffues values
-Kd  1 0 0 
+Kd  0.5 0 0 
 # specular values
-Ks  1 1 1
+Ks  0.5 1 1
 # sharpness of specular reflection
 Ns  10
 # texture map filename

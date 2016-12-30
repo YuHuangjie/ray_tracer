@@ -30,6 +30,7 @@ int main()
 	sphere1->SetSpecular(Color(0.4, 0.4, 0.0));
 	sphere1->SetSpecularExp(60);
 	sphere1->SetReflection(0.5);
+	sphere1->SetRoughness(0.1);
 	objects.push_back(sphere1);
 
 	sphere2->SetAmbient(Color(0.1, 0.1, 0.1));
@@ -37,6 +38,7 @@ int main()
 	sphere2->SetSpecular(Color(0.0, 0.4, 0.4));
 	sphere2->SetSpecularExp(20);
 	sphere2->SetReflection(0.5);
+	sphere2->SetRoughness(1);
 	objects.push_back(sphere2);
 
 	bot->SetAmbient(Color(0.3, 0.4, 0.6));
@@ -76,10 +78,7 @@ int main()
 
 
 	shared_ptr<PointLight> pl = make_shared<PointLight>(camera.GetEye());
-	pl->SetAmbient(Color(0.1, 0.1, 0.1));
-	pl->SetDiffuse(Color(0.7, 0.7, 0.7));
-	pl->SetSpecular(Color(0.7, 0.7, 0.7));
-	pl->SetIntensity(40);
+	pl->SetIntensity(Color(50, 50, 50));
 	lights.push_back(pl);
 
 	vector<Ray> rays;

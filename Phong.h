@@ -1,7 +1,6 @@
 #ifndef PHONG_H
 #define PHONG_H
 
-#include <cstdint>
 #include <vector>
 #include "Color.h"
 #include "Ray.h"
@@ -20,7 +19,7 @@ public:
 		const Intersection &inter, 
 		const vector< shared_ptr<const Light> > &lights,
 		const vector< shared_ptr<const Primitive> > &objects,
-		bool primary);
+		bool useAmbient);
 
 };
 
