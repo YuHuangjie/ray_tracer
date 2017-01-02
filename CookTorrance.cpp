@@ -72,9 +72,9 @@ Color CookTorrance::GetColor(
 			fresnel *= (1.0 - F0);
 			fresnel += F0;
 
-			double specular = (fresnel * geoAtt * roughness) / (NdotV * NdotL * PI);
+			double specular = (fresnel * geoAtt * roughness) / (NdotV * NdotL);
 			
-			ret += lightRadiance * NdotL * (kd / PI + ks * specular);
+			ret += lightRadiance * NdotL * (kd + ks * specular);
 		}
 	}
 
