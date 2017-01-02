@@ -55,11 +55,11 @@
     <Filter Include="render\cook_torrance">
       <UniqueIdentifier>{e422e71d-951d-4755-8104-99641edf3baf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="render\Color">
+      <UniqueIdentifier>{001f7656-8322-45de-bc0d-7fe9abc17ae2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>camera</Filter>
     </ClInclude>
@@ -158,6 +158,9 @@
     <ClInclude Include="CookTorrance.h">
       <Filter>render\cook_torrance</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>render\Color</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -174,9 +177,6 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>geometry\light</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>geometry\primitive</Filter>
@@ -245,6 +245,12 @@
     <ClCompile Include="CookTorrance.cpp">
       <Filter>render\cook_torrance</Filter>
     </ClCompile>
-    <ClCompile Include="main_mesh_renderer.cpp" />
+    <ClCompile Include="Color.cpp">
+      <Filter>render\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="main_basic_render.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="result\indirect_diffuse_cooktorrance_ball.png" />
   </ItemGroup>
 </Project>

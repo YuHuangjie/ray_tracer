@@ -193,7 +193,7 @@
     <ClCompile Include="lw_image\lw_color.cpp" />
     <ClCompile Include="lw_image\lw_image.cpp" />
     <ClCompile Include="Image.cpp" />
-    <ClCompile Include="main_mesh_renderer.cpp" />
+    <ClCompile Include="main_basic_render.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="obj_parser\list.cpp" />
     <ClCompile Include="obj_parser\objLoader.cpp" />
@@ -210,6 +210,9 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector4.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="result\indirect_diffuse_cooktorrance_ball.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,10 +6,17 @@
 
 Renderer::Renderer()
 	: depth(5)
-{}
+	, indDiffuseSample(16)
+	, indSpecularSample(16)
+	, distribution(0, 1)
+{
+}
 
 Renderer::Renderer(const uint16_t depth)
 	: depth(depth)
+	, indDiffuseSample(16)
+	, indSpecularSample(16)
+	, distribution(0, 1)
 {}
 
 void Renderer::SetDepth(const uint16_t depth)
@@ -22,11 +29,21 @@ uint16_t Renderer::GetDepth(void) const
 	return depth;
 }
 
+void Renderer::SetIndirectDiffuseSample(const uint16_t sample)
+{
+	indDiffuseSample = sample;
+}
+
+uint16_t Renderer::GetIndirectDiffuseSample(void) const
+{
+	return indDiffuseSample;
+}
+
 Color Renderer::RenderRay(
 	const Ray &ray,
 	const vector< shared_ptr<const Primitive> > &objects,
 	const vector< shared_ptr<const Light> > &lights,
-	bool globalLighting/* = false */) const
+	bool globalLighting/* = false */)
 {
 	if (objects.size() == 0 || lights.size() == 0) {
 		return Color(0, 0, 0);
@@ -39,7 +56,7 @@ Color Renderer::RenderRay(
 	const vector< shared_ptr<const Primitive> > &objects,
 	const vector< shared_ptr<const Light> > &lights,
 	uint16_t depth,
-	bool globalLighting/* = false */) const
+	bool globalLighting/* = false */)
 {
 	// stop condition
 	if (depth == 0) {
@@ -58,7 +75,7 @@ Color Renderer::RenderRay(
 
 	if (!globalLighting) {
 		// ambient simulates global diffuse
-		ret += CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, true);
+		ret += Phong::GetColor(-ray.GetDirection(), inter, lights, objects, true) / PI;
 
 		// recursive tracing on reflected ray
 		Ray reflect;
@@ -67,17 +84,55 @@ Color Renderer::RenderRay(
 		reflect.SetOrigin(inter.GetPosition());
 		reflect.SetDirection((V - N * 2 * (V*N)).NormalizedVec());
 		Color c = RenderRay(reflect, objects, lights, depth - 1, globalLighting);
-		ret += c * interObj->GetReflection(); 
+		ret += c * interObj->GetReflection() / PI; 
 	}
 	else {
 		// local illumination
-		ret += CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, false);
+		Color direct = CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, false);
 
 		// global illumination
+		double PDF = 1.0 / (2 * PI);
+		Color globalDiffuse(0, 0, 0);
+		Vector4 Nt, Nb;
+		Vector4 N = inter.GetNormal();
+		CreateCoordinateSystem(N, Nt, Nb);
 
+		// global diffuse
+		for (uint16_t n = 0; n != indDiffuseSample; ++n) {
+			double r1 = distribution(generator);
+			double r2 = distribution(generator);
+			Vector4 sample = UniformSampleHemisphere(r1, r2);
+			Vector4 sampleWorld = Nb*sample.x + N*sample.y + Nt*sample.z;
+			Ray sampleRay(inter.GetPosition(), sampleWorld);
+			globalDiffuse += RenderRay(sampleRay, objects, lights, depth - 1, globalLighting) * r1 / PDF;
+		}
+		globalDiffuse = globalDiffuse / indDiffuseSample * interObj->GetDiffuse();
+
+		// global specular
+
+
+		ret = direct / PI + globalDiffuse;
 	}
 
 	return ret;
+}
+
+void Renderer::CreateCoordinateSystem(const Vector4 &N, Vector4 &Nt, Vector4 &Nb) const
+{
+	if (std::abs(N.x) > abs(N.y))
+		Nt = Vector4(N.z, 0, -N.x).NormalizedVec();
+	else
+		Nt = Vector4(0, -N.z, N.y).NormalizedVec();
+	Nb = N.Cross(Nt);
+}
+
+Vector4 Renderer::UniformSampleHemisphere(const double &r1, const double &r2) const
+{
+	double sinTheta = sqrt(1 - r1 * r1);
+	double phi = 2 * PI * r2;
+	double x = sinTheta * cos(phi);
+	double z = sinTheta * sin(phi);
+	return Vector4(x, r1, z);
 }
 
 
