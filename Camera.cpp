@@ -153,11 +153,7 @@ vector<Ray> Camera::GeneratePrimaryRay(uint16_t u, uint16_t v, int sample) const
 
 	// generate random sample point inside a pixel
 	for (int i = 0; i != sample; ++i) {
-		/*double fracU = 1.0 * (u + 0.5) / width * w;
-		double fracV = 1.0 * (v + 0.5) / height * h;
 
-		ret.SetOrigin(eye);
-		ret.SetDirection((corner + dirU*fracU + dirV*fracV - eye).Normalize());*/
 		fracW = 1.0 * (u + mt() / max) / width * w;
 		fracH = 1.0 * (v + mt() / max) / height * h;
 		ray.SetOrigin(eye);

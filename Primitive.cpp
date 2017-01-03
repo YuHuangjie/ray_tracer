@@ -76,6 +76,8 @@ void Primitive::SetRoughness(const double rough)
 	else {
 		roughness = rough;
 	}
+
+	SetGloss(sqrt(1 - roughness));
 }
 
 double Primitive::GetRoughness(void) const
@@ -93,6 +95,24 @@ double Primitive::GetFresnelReflection(void) const
 	return fresnel;
 }
 
+void Primitive::SetGloss(const double g)
+{
+	if (g > 1) {
+		gloss = 1;
+	}
+	else if (g <= 0) {
+		gloss = 0;
+	}
+	else {
+		gloss = g;
+	}
+}
+
+double Primitive::GetGloss(void) const
+{
+	return gloss;
+}
+
 PrimitiveType Primitive::GetType(void) const
 {
 	return type;
@@ -103,8 +123,8 @@ void Primitive::SetDefaultMtl(void)
 	ka = Color(0, 0, 0);
 	kd = Color(0, 0, 0);
 	ks = Color(0, 0, 0);
-	ns = 1;
-	r = 0;
-	roughness = 0.3;
-	fresnel = 0.8;
+	ns = 10;
+	SetReflection(0);
+	SetRoughness(0.3);
+	SetFresnelReflection(0.8);
 }

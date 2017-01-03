@@ -11,12 +11,12 @@
 int main()
 {
 	Camera camera(Point4(0, 5, 8), Vector4(0, 1, 0), Vector4(0, 0, 1));
-	Renderer renderer(1);
+	Renderer renderer(2);
 	vector< shared_ptr<const Primitive> > objects;
 	vector< shared_ptr<const Light> > lights;
 
 	// set camera resolution
-	camera.SetResolution(320, 240);
+	camera.SetResolution(640, 480);
 
 	shared_ptr<InfinitePlane> left = make_shared<InfinitePlane>(Point4(-8, 0, 0), Vector4(1, 0, 0));
 	shared_ptr<InfinitePlane> right = make_shared<InfinitePlane>(Point4(8, 0, 0), Vector4(-1, 0, 0));

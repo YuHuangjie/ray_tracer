@@ -19,9 +19,6 @@ void PointLight::Illuminate(
 	lightDir = (P - position);
 	dist = lightDir.Norm();
 	lightDir.Normalize();
-	//ambientIntensity = ambient * intensity / (4 * PI * dist);
-	//diffuseIntensity = diffuse * intensity / (4 * PI * dist);
-	//specularIntensity = specular * intensity / (4 * PI * dist);
 	radians = intensity / (4 * PI * dist);
 }
 

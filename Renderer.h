@@ -35,10 +35,10 @@ public:
 	void SetDepth(const uint16_t depth);
 	uint16_t GetDepth(void) const;
 
-	void SetIndirectDiffuseSample(const uint16_t sample);
+	void SetIndirectDiffuseSample(const uint16_t &sample);
 	uint16_t GetIndirectDiffuseSample(void) const;
 
-	void SetIndirectSpecularSample(const uint16_t sample);
+	void SetIndirectSpecularSample(const uint16_t &sample);
 	uint16_t GetIndirectSpecularSample(void) const;
 
 private:

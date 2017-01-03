@@ -251,6 +251,6 @@
     <ClCompile Include="main_basic_render.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="result\indirect_diffuse_cooktorrance_ball.png" />
+    <Image Include="result\temp.png" />
   </ItemGroup>
 </Project>
