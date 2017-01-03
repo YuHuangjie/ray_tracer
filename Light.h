@@ -18,22 +18,10 @@ public:
 	void SetIntensity(const Color&);
 	Color GetIntensity(void) const;
 
-	//void SetAmbient(const Color &);
-	//Color GetAmbient(void) const;
-
-	//void SetDiffuse(const Color &);
-	//Color GetDiffuse(void) const;
-
-	//void SetSpecular(const Color &);
-	//Color GetSpecular(void) const;
-
 	LightType GetType(void) const;
 
 protected:
 	Color intensity;
-	//Color ambient;
-	//Color diffuse;
-	//Color specular;
 
 	LightType type;
 

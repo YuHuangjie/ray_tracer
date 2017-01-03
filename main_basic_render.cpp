@@ -1,5 +1,6 @@
 #include <vector>
 #include <thread>
+#include <ctime>
 
 #include "Camera.h"
 #include "InfinitePlane.h"
@@ -20,15 +21,17 @@ void OnRenderColumn(
 
 int main()
 {
-	Camera camera(Point4(4, 2, 1), Vector4(0, 0, 1), Vector4(1, 0, 0));
+	Camera camera(Point4(5, 2, 1), Vector4(0, 0, 1), Vector4(1, 0, 0));
 	Renderer renderer(2);
-	renderer.SetIndirectDiffuseSample(128);
+	renderer.SetIndirectDiffuseSample(64);
+	renderer.SetIndirectSpecularSample(64);
 	vector< shared_ptr<const Primitive> > objects;
 	vector< shared_ptr<const Light> > lights;
 
 	// set camera resolution
-	camera.SetResolution(200, 200);
+	camera.SetResolution(320, 240);
 
+	// declare analytic objects
 	shared_ptr<Sphere> sphere1 = make_shared<Sphere>(Point4(1, 0, 1), 1);
 	shared_ptr<Sphere> sphere2 = make_shared<Sphere>(Point4(1, 4, 1), 1);
 	shared_ptr<InfinitePlane> bot = make_shared<InfinitePlane>(Point4(0, 0, 0), Vector4(0, 0, 1));
@@ -42,57 +45,63 @@ int main()
 	sphere1->SetSpecular(Color(0.2, 0.2, 0.2));
 	sphere1->SetSpecularExp(60);
 	sphere1->SetReflection(0.5);
-	sphere1->SetRoughness(0.3);
+	sphere1->SetRoughness(0.8);
 	objects.push_back(sphere1);
 
 	sphere2->SetAmbient(Color(0.1, 0.1, 0.1));
-	sphere2->SetDiffuse(Color(0.8, 0.8, 0.8));
-	sphere2->SetSpecular(Color(0.2, 0.2, 0.2));
+	sphere2->SetDiffuse(Color(0.4, 0.4, 0.4));
+	sphere2->SetSpecular(Color(0.6, 0.6, 0.6));
 	sphere2->SetSpecularExp(20);
 	sphere2->SetReflection(0.5);
-	sphere2->SetRoughness(0.7);
+	sphere2->SetRoughness(0.2);
 	objects.push_back(sphere2);
 
 	bot->SetAmbient(Color(0.1, 0.1, 0.1));
-	bot->SetDiffuse(Color(0.3, 0.4, 0.6));
-	bot->SetSpecular(Color(0, 0, 0));
+	bot->SetDiffuse(Color(0.1, 0.1, 0.7));
+	bot->SetSpecular(Color(0.1, 0.1, 0.3));
 	bot->SetSpecularExp(128);
 	bot->SetReflection(0.5);
+	bot->SetRoughness(0.7);
 	objects.push_back(bot);
 
 	left->SetAmbient(Color(0.1, 0.1, 0.1));
-	left->SetDiffuse(Color(0.3, 0.8, 0.6));
-	left->SetSpecular(Color(0, 0, 0));
+	left->SetDiffuse(Color(0.1, 0.3, 0.1));
+	left->SetSpecular(Color(0.1, 0.7, 0.1));
 	left->SetSpecularExp(128);
 	left->SetReflection(0.5);
+	left->SetRoughness(0.1);
 	objects.push_back(left);
 
 	back->SetAmbient(Color(0.1, 0.1, 0.1));
-	back->SetDiffuse(Color(0.8, 0.4, 0.6));
-	back->SetSpecular(Color(0, 0, 0));
+	back->SetDiffuse(Color(0.8, 0.1, 0.1));
+	back->SetSpecular(Color(0.2, 0.1, 0.1));
 	back->SetSpecularExp(128);
 	back->SetReflection(0.5);
+	back->SetRoughness(0.5);
 	objects.push_back(back);
 
 	right->SetAmbient(Color(0.1, 0.1, 0.1));
-	right->SetDiffuse(Color(0.3, 0.8, 0.6));
-	right->SetSpecular(Color(0, 0, 0));
+	right->SetDiffuse(Color(0.1, 0.3, 0.1));
+	right->SetSpecular(Color(0.1, 0.7, 0.1));
 	right->SetSpecularExp(128);
 	right->SetReflection(0.5);
+	right->SetRoughness(0.1);
 	objects.push_back(right);
 
 	up->SetAmbient(Color(0.1, 0.1, 0.1));
-	up->SetDiffuse(Color(0.3, 0.4, 0.6));
-	up->SetSpecular(Color(0, 0, 0));
+	up->SetDiffuse(Color(0.8, 0.8, 0.8));
+	up->SetSpecular(Color(0.2, 0.2, 0.2));
 	up->SetSpecularExp(128);
 	up->SetReflection(0.5);
+	up->SetRoughness(0.7);
 	objects.push_back(up);
 
-
+	// declare point light
 	shared_ptr<PointLight> pl = make_shared<PointLight>(Point4(1, 2, 3.9));
 	pl->SetIntensity(Color(70, 70, 70));
 	lights.push_back(pl);
 
+	// set variables
 	vector<Ray> rays;
 	uint16_t W = camera.GetWidth();
 	uint16_t H = camera.GetHeight();
@@ -103,10 +112,13 @@ int main()
 	Color tc[16];
 	thread t[16];
 
-	// sample pixels and render each ray
+	// set timer
+	clock_t start = clock();
+
+	// render main process
 	for (uint16_t w = 0; w != camera.GetWidth(); w++) {
-		for (uint16_t h = 0; h != camera.GetHeight(); h += thread_count) {
-			// multithread rendering
+		for (uint16_t h = 0; h < camera.GetHeight(); h += thread_count) {
+			// multithread acceleration
 			for (uint16_t i = 0; i != thread_count; ++i) {
 				t[i] = thread(OnRenderColumn, camera, ref(renderer), objects, lights, w, h + i, sample, indirectLighting, ref(tc[i]));
 			}
@@ -121,7 +133,18 @@ int main()
 		cout << ((double)w / camera.GetWidth()) * 100 << "%" << endl;
 	}
 
-	photo.Save("result/indirect_diffuse_cooktorrance_ball.png");
+	// output rendering time
+	uint32_t sec = (clock() - start) / CLOCKS_PER_SEC;
+	uint32_t min = sec / 60;
+	uint32_t hour = min / 60;
+	min = min - hour * 60;
+	sec = sec - hour * 3600 - min * 60;
+	cout << "render time: " << hour << "h " << min << "m " << sec << "s" << endl;
+
+	// saving image
+	string  filename = "result/temp.png";
+	cout << "saving to " << filename << endl;
+	photo.Save(filename);
 
 }
 
@@ -135,10 +158,12 @@ void OnRenderColumn(
 	const bool &indirect,
 	Color &ret)
 {
-	if (w >= camera.GetWidth()) {
+	if (h >= camera.GetHeight()) {
 		ret = Color(0, 0, 0);
 		return;
 	}
+
+	ret = Color(0, 0, 0);
 
 	vector<Ray>::const_iterator it;
 	vector<Ray> rays = camera.GeneratePrimaryRay(w, h, sample);

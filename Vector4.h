@@ -24,7 +24,7 @@ public:
 
 	Vector4 operator-(void) const;	
 
-	void Normalize(void);			// vector.Normalize() = vector
+	void Normalize(void);			
 	Vector4 NormalizedVec(void);
 	double Norm(void) const;
 

@@ -39,6 +39,9 @@ public:
 	virtual void SetFresnelReflection(const double);
 	virtual double GetFresnelReflection(void) const;
 
+	virtual void SetGloss(const double);
+	virtual double GetGloss(void) const;
+
 	virtual PrimitiveType GetType(void) const;
 
 
@@ -50,6 +53,7 @@ protected:
 	double r;	// reflection amount
 	double roughness;	// 0 : smooth, 1: rough
 	double fresnel;		// fresnel reflectance at normal incidence
+	double gloss;		// 0 : no gloss effect, 1 : mirror reflection
 
 	PrimitiveType type;
 
