@@ -20,9 +20,9 @@ namespace lw {
 	*/
 	class  Image {
 	protected:
-		size_t _width = 0U;
-		size_t _height = 0U;
-		std::unique_ptr<Color[]> _pixels = {};
+		size_t _width/* = 0U*/;
+		size_t _height/* = 0U*/;
+		std::unique_ptr<Color[]> _pixels/* = {}*/;
 
 	public:
 		Image();
