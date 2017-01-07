@@ -6,6 +6,7 @@
 #include "Point4.h"
 #include "Vector4.h"
 #include "Define.h"
+#include <vector>
 
 class Light
 {
@@ -13,7 +14,7 @@ public:
 	Light(LightType);
 	virtual ~Light() {}
 
-	virtual void Illuminate(const Point4 &, Vector4 &, Color &, double &) const = 0;
+	virtual void Illuminate(const Point4 &, vector<Vector4> &, vector<Color> &, vector<double> &) const = 0;
 
 	void SetIntensity(const Color&);
 	Color GetIntensity(void) const;
@@ -22,7 +23,6 @@ public:
 
 protected:
 	Color intensity;
-
 	LightType type;
 
 private:

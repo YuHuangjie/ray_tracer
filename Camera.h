@@ -39,6 +39,10 @@ public:
 	double GetNear(void) const;
 	double GetFar(void) const;
 
+	/* depth of field related */
+	void SetAperture(const double f, const double r, const uint16_t num);
+
+	// Generate primary rays for a pixel
 	vector<Ray> GeneratePrimaryRay(uint16_t u, const uint16_t v, int sample = 1) const;
 
 	friend ostream& operator<<(ostream& os, const Camera &);
@@ -53,7 +57,7 @@ private:
 	double theta;		// vertical field of view
 	uint16_t width;		// column pixel range
 	uint16_t height;	// row pixel range
-	double near;
+	double near;		// distance between eye and image plane
 	double far;
 
 	// helper member for calculating ray
@@ -61,6 +65,19 @@ private:
 	Point4 corner;		// upper left coordinate
 	Vector4 dirU;		// unit vector along column axis
 	Vector4 dirV;		// unit vector along row axis
+
+	/* depth of field related */
+	double f;			// distance between aperture and focal plane
+	double aperture_r;	// radius of aperture, aperture is at the same
+	// position of eye
+	vector<Point4> aperture_samples; // points sampled on aperture
+
+	// Sample on the aperture
+	void SetFocalLength(const double f);
+	void SetApertureRadius(const double r);
+	void SetApertureSampleNum(const uint16_t num); 
+	vector<Point4> SampleAperture(const uint16_t num_sample) const;
+
 };
 
 

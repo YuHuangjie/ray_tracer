@@ -23,33 +23,48 @@ Color Phong::GetColor(
 
 	// direct lighting
 	vector< shared_ptr<const Light> >::const_iterator light;
-	Color lightRadiance;
-	Vector4 lightDir;
-	double distL2P;
+	vector<Color> lightRadiances;
+	vector<Vector4> lightDirs;
+	vector<double> distL2Ps;
+
 	for(light = lights.cbegin(); light != lights.cend(); ++light) {
 
-		(*light)->Illuminate(p, lightDir, lightRadiance, distL2P);
+		Color illuminated(0, 0, 0);
 
-		// ambient
-		if (useAmbient) {
-			ret += lightRadiance * object->GetAmbient();
+		(*light)->Illuminate(p, lightDirs, lightRadiances, distL2Ps);
+
+		// local illumination calculation for all light samples
+		for (size_t lightSample = 0; lightSample != lightDirs.size(); ++lightSample) {
+			Color lightRadiance = lightRadiances[lightSample];
+			Vector4 lightDir = lightDirs[lightSample];
+			double distL2P = distL2Ps[lightSample];
+
+			// ambient
+			if (useAmbient) {
+				illuminated += lightRadiance * object->GetAmbient();
+			}
+
+			// shadow ray test
+			bool visible = !Assistant::Shadow(Ray(p, -lightDir), objects, distL2P);
+
+			// apply diffuse and specular effect if not shadow found
+			if (visible) {
+				// diffuse 
+				diffuseScale = std::max(0.0, N * (-lightDir));
+				illuminated += lightRadiance * object->GetDiffuse() * diffuseScale;
+
+				// specular
+				Vector4 H = (-lightDir + V);
+				H.Normalize();
+				specularScale = std::max(0.0, N * H);
+				specularScale = pow(specularScale, object->GetSpecularExp());
+				illuminated += lightRadiance * object->GetSpecular() * specularScale;
+			}
 		}
-
-		// shadow ray test
-		bool visible = !Assistant::Shadow(Ray(p, -lightDir), objects, distL2P);
-
-		// apply diffuse and specular effect if not shadow found
-		if (visible) {
-			// diffuse 
-			diffuseScale = std::max(0.0, N * (-lightDir));
-			ret += lightRadiance * object->GetDiffuse() * diffuseScale;
-
-			// specular
-			Vector4 H = (-lightDir + V);
-			H.Normalize();
-			specularScale = std::max(0.0, N * H);
-			specularScale = pow(specularScale, object->GetSpecularExp());
-			ret += lightRadiance * object->GetSpecular() * specularScale;
+		
+		// average samples
+		if (!lightDirs.empty()) {
+			ret += illuminated / (double)lightDirs.size();
 		}
 	}
 

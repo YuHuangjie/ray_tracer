@@ -12,14 +12,15 @@ PointLight::PointLight(const Point4 &pos)
 
 void PointLight::Illuminate(
 	const Point4 &P, 
-	Vector4 &lightDir, 
-	Color &radians,
-	double &dist) const
+	vector<Vector4> &lightDir, 
+	vector<Color> &radians,
+	vector<double> &dist) const
 {
-	lightDir = (P - position);
-	dist = lightDir.Norm();
-	lightDir.Normalize();
-	radians = intensity / (4 * PI * dist);
+	Vector4 dir = P - position;
+	double distance = dir.Norm();
+	lightDir.push_back(dir.NormalizedVec());
+	radians.push_back(intensity / (4 * PI * distance));
+	dist.push_back(distance);
 }
 
 void PointLight::SetPosition(const Point4 &pos)

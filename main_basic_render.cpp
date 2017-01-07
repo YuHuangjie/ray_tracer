@@ -6,6 +6,7 @@
 #include "InfinitePlane.h"
 #include "Sphere.h"
 #include "PointLight.h"
+#include "AreaLight.h"
 #include "Renderer.h"
 #include "Image.h"
 
@@ -21,19 +22,21 @@ void OnRenderColumn(
 
 int main()
 {
-	Camera camera(Point4(5, 2, 1), Vector4(0, 0, 1), Vector4(1, 0, 0));
+	Camera camera(Point4(6, 2, 1), Vector4(0, 0, 1), Vector4(1, 0, 0));
 	Renderer renderer(2);
-	renderer.SetIndirectDiffuseSample(64);
+	renderer.SetIndirectDiffuseSample(128);
 	renderer.SetIndirectSpecularSample(64);
 	vector< shared_ptr<const Primitive> > objects;
 	vector< shared_ptr<const Light> > lights;
 
 	// set camera resolution
-	camera.SetResolution(320, 240);
+	camera.SetResolution(160, 120);
+	// set camera aperture
+	//camera.SetAperture(2, 0.5, 256);
 
 	// declare analytic objects
-	shared_ptr<Sphere> sphere1 = make_shared<Sphere>(Point4(1, 0, 1), 1);
-	shared_ptr<Sphere> sphere2 = make_shared<Sphere>(Point4(1, 4, 1), 1);
+	shared_ptr<Sphere> sphere1 = make_shared<Sphere>(Point4(3.5, 1, 0.55), 0.5);
+	shared_ptr<Sphere> sphere2 = make_shared<Sphere>(Point4(1, 3.5, 1), 1);
 	shared_ptr<InfinitePlane> bot = make_shared<InfinitePlane>(Point4(0, 0, 0), Vector4(0, 0, 1));
 	shared_ptr<InfinitePlane> left = make_shared<InfinitePlane>(Point4(0, -2, 0), Vector4(0, 1, 0));
 	shared_ptr<InfinitePlane> back = make_shared<InfinitePlane>(Point4(-1, 0, 0), Vector4(1, 0, 0));
@@ -65,41 +68,51 @@ int main()
 	objects.push_back(bot);
 
 	left->SetAmbient(Color(0.1, 0.1, 0.1));
-	left->SetDiffuse(Color(0.1, 0.3, 0.1));
-	left->SetSpecular(Color(0.1, 0.7, 0.1));
+	//left->SetDiffuse(Color(0.1, 0.3, 0.1));
+	//left->SetSpecular(Color(0.1, 0.7, 0.1));
+	left->SetDiffuse(Color(0.5, 0.5, 0.5));
+	left->SetSpecular(Color(0.5, 0.5, 0.5));
 	left->SetSpecularExp(128);
 	left->SetReflection(0.5);
 	left->SetRoughness(0.1);
 	objects.push_back(left);
 
 	back->SetAmbient(Color(0.1, 0.1, 0.1));
-	back->SetDiffuse(Color(0.8, 0.1, 0.1));
-	back->SetSpecular(Color(0.2, 0.1, 0.1));
+	/*back->SetDiffuse(Color(0.8, 0.1, 0.1));
+	back->SetSpecular(Color(0.2, 0.1, 0.1));*/
+	back->SetDiffuse(Color(0.5, 0.5, 0.5));
+	back->SetSpecular(Color(0.5, 0.5, 0.5));
 	back->SetSpecularExp(128);
 	back->SetReflection(0.5);
 	back->SetRoughness(0.5);
 	objects.push_back(back);
 
 	right->SetAmbient(Color(0.1, 0.1, 0.1));
-	right->SetDiffuse(Color(0.1, 0.3, 0.1));
-	right->SetSpecular(Color(0.1, 0.7, 0.1));
+	//right->SetDiffuse(Color(0.1, 0.3, 0.1));
+	//right->SetSpecular(Color(0.1, 0.7, 0.1));
+	right->SetDiffuse(Color(0.5, 0.5, 0.5));
+	right->SetSpecular(Color(0.5, 0.5, 0.5)); 
 	right->SetSpecularExp(128);
 	right->SetReflection(0.5);
 	right->SetRoughness(0.1);
 	objects.push_back(right);
 
 	up->SetAmbient(Color(0.1, 0.1, 0.1));
-	up->SetDiffuse(Color(0.8, 0.8, 0.8));
-	up->SetSpecular(Color(0.2, 0.2, 0.2));
+	up->SetDiffuse(Color(0.5, 0.5, 0.5));
+	up->SetSpecular(Color(0.5, 0.5, 0.5));
 	up->SetSpecularExp(128);
 	up->SetReflection(0.5);
-	up->SetRoughness(0.7);
+	up->SetRoughness(0.5);
 	objects.push_back(up);
 
 	// declare point light
-	shared_ptr<PointLight> pl = make_shared<PointLight>(Point4(1, 2, 3.9));
-	pl->SetIntensity(Color(70, 70, 70));
-	lights.push_back(pl);
+	//shared_ptr<PointLight> pl = make_shared<PointLight>(Point4(1, 2, 3.9));
+	//pl->SetIntensity(Color(70, 70, 70));
+	//lights.push_back(pl);
+	shared_ptr<AreaLight> al = make_shared<AreaLight>(Point4(3, 2, 3), Vector4(0, 0, -1), 1, 1);
+	al->SetIntensity(Color(70, 70, 70));
+	al->SetSample(5, 5);
+	lights.push_back(al);
 
 	// set variables
 	vector<Ray> rays;
@@ -108,7 +121,7 @@ int main()
 	Image photo(W, H);
 	int sample = 8;
 	bool indirectLighting = true;
-	uint16_t thread_count = 8;
+	uint16_t maxThreadCount = 8;
 	Color tc[16];
 	thread t[16];
 
@@ -117,15 +130,16 @@ int main()
 
 	// render main process
 	for (uint16_t w = 0; w != camera.GetWidth(); w++) {
-		for (uint16_t h = 0; h < camera.GetHeight(); h += thread_count) {
+		for (uint16_t h = 0; h < camera.GetHeight(); h += maxThreadCount) {
+			uint16_t threadCount = (camera.GetHeight() - h < maxThreadCount) ? camera.GetHeight() - h : maxThreadCount;
 			// multithread acceleration
-			for (uint16_t i = 0; i != thread_count; ++i) {
+			for (uint16_t i = 0; i != threadCount; ++i) {
 				t[i] = thread(OnRenderColumn, camera, ref(renderer), objects, lights, w, h + i, sample, indirectLighting, ref(tc[i]));
 			}
-			for (uint16_t i = 0; i != thread_count; ++i) {
+			for (uint16_t i = 0; i != threadCount; ++i) {
 				t[i].join();
 			}
-			for (uint16_t i = 0; i != thread_count; ++i) {
+			for (uint16_t i = 0; i != threadCount; ++i) {
 				photo.SetPixel(w, h + i, tc[i]);
 			}
 		}
@@ -172,5 +186,5 @@ void OnRenderColumn(
 		ret += renderer.RenderRay(*it, objects, lights, indirect);
 	}
 
-	ret = ret * (1.0 / sample);
+	ret = ret * (1.0 / rays.size());
 }

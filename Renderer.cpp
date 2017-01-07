@@ -85,7 +85,7 @@ Color Renderer::RenderRay(
 
 	if (!globalLighting) {
 		// ambient simulates global diffuse
-		ret += Phong::GetColor(-ray.GetDirection(), inter, lights, objects, true) / PI;
+		ret += CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, true) / PI;
 
 		// recursive tracing on reflected ray
 		Ray reflect;
@@ -97,7 +97,7 @@ Color Renderer::RenderRay(
 		ret += c * interObj->GetReflection() / PI; 
 	}
 	else {
-		//// local illumination
+		// local illumination
 		Color direct = CookTorrance::GetColor(-ray.GetDirection(), inter, lights, objects, false);
 
 		// global diffuse illumination
@@ -137,7 +137,6 @@ Color Renderer::RenderRay(
 				Vector4 sampleWorld = Rb*sample.x + R*sample.y + Rt*sample.z;
 				if (sampleWorld * N <= 0) {
 					// reflected ray under surface
-					n--;
 					continue;
 				}
 
@@ -149,7 +148,7 @@ Color Renderer::RenderRay(
 		}
 
 		// add up local & global illumination
-		ret = direct / PI + /*globalDiffuse + */globalSpecular;
+		ret = direct / PI + globalDiffuse + globalSpecular;
 	}
 
 	return ret;
