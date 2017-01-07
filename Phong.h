@@ -6,6 +6,7 @@
 #include "Ray.h"
 #include "Intersection.h"
 #include "PointLight.h"
+#include "AreaLight.h"
 #include "Assistant.h"
 
 using namespace std;

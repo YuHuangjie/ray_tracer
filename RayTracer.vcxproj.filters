@@ -242,13 +242,13 @@
     <ClCompile Include="KDTree.cpp">
       <Filter>acceleration\kd_tree</Filter>
     </ClCompile>
-    <ClCompile Include="CookTorrance.cpp">
-      <Filter>render\cook_torrance</Filter>
-    </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>render\Color</Filter>
     </ClCompile>
     <ClCompile Include="main_basic_render.cpp" />
+    <ClCompile Include="CookTorrance.cpp">
+      <Filter>render\cook_torrance</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="result\temp.png" />
