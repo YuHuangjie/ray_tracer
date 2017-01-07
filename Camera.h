@@ -49,8 +49,8 @@ private:
 	Vector4 up;
 	Vector4 lookat;
 	Point4 eye;
-	double aspect;
-	double theta;
+	double aspect;		// width / height
+	double theta;		// vertical field of view
 	uint16_t width;		// column pixel range
 	uint16_t height;	// row pixel range
 	double near;
