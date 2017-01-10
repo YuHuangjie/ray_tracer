@@ -24,15 +24,15 @@ int main()
 {
 	Camera camera(Point4(6, 2, 1), Vector4(0, 0, 1), Vector4(1, 0, 0));
 	Renderer renderer(2);
-	renderer.SetIndirectDiffuseSample(128);
+	renderer.SetIndirectDiffuseSample(32);
 	renderer.SetIndirectSpecularSample(64);
 	vector< shared_ptr<const Primitive> > objects;
 	vector< shared_ptr<const Light> > lights;
 
 	// set camera resolution
-	camera.SetResolution(160, 120);
+	camera.SetResolution(320, 240);
 	// set camera aperture
-	//camera.SetAperture(2, 0.5, 256);
+	camera.SetAperture(2.5, 0.3, 64); 
 
 	// declare analytic objects
 	shared_ptr<Sphere> sphere1 = make_shared<Sphere>(Point4(3.5, 1, 0.55), 0.5);
@@ -111,7 +111,7 @@ int main()
 	//lights.push_back(pl);
 	shared_ptr<AreaLight> al = make_shared<AreaLight>(Point4(3, 2, 3), Vector4(0, 0, -1), 1, 1);
 	al->SetIntensity(Color(70, 70, 70));
-	al->SetSample(5, 5);
+	al->SetSample(4, 4);
 	lights.push_back(al);
 
 	// set variables
@@ -119,8 +119,8 @@ int main()
 	uint16_t W = camera.GetWidth();
 	uint16_t H = camera.GetHeight();
 	Image photo(W, H);
-	int sample = 8;
-	bool indirectLighting = true;
+	int sample = 4;
+	bool indirectLighting = false;
 	uint16_t maxThreadCount = 8;
 	Color tc[16];
 	thread t[16];

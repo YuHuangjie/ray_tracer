@@ -23,8 +23,8 @@ AreaLight::AreaLight(const Point4 &cen, const Vector4 &norm, const double &w, co
 	
 	// construct default right direction (always on y-z plane)
 	area_rightdir.x = 0;
-	area_rightdir.y = 1;
-	area_rightdir.z = -norm.y / norm.z;
+	area_rightdir.y = -norm.z;
+	area_rightdir.z = norm.y;
 	area_rightdir.Normalize();
 
 	area_width = (w <= 0 ? 1 : w);
@@ -43,12 +43,15 @@ void AreaLight::Illuminate(
 	if (samplePositions == nullptr) {
 		lightDir.clear();
 		radiance.clear();
-		dist.clear();
+		dist.clear(); 
 		return;
 	}
 
 	Vector4 dir;
 	Color color;
+	lightDir.clear();
+	radiance.clear();
+	dist.clear();
 
 	for (uint16_t i = 0; i != wSample * hSample; i++)
 	{

@@ -1,5 +1,6 @@
 #include "Assistant.h"
 #include <cfloat>
+#include <ctime>
 
 
 bool Assistant::Shadow(
@@ -12,7 +13,7 @@ bool Assistant::Shadow(
 	double dist;
 
 	for (object = objects.cbegin(); object != objects.cend(); ++object) {
-		inter = (*object)->Intersect(ray, dist); 
+		inter = (*object)->Intersect(ray, dist);
 		if (inter.GetPrimitive() != nullptr && dist < distToLight) {
 			return true;
 		}

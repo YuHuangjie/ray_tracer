@@ -41,7 +41,7 @@ Color CookTorrance::GetColor(
 			Color lightRadiance = lightRadiances[lightSample];
 			Vector4 L = Ls[lightSample];
 			double distL2P = distL2Ps[lightSample];
-			
+
 			// ambient
 			if (useAmbient) {
 				illuminated += lightRadiance * object->GetAmbient();
