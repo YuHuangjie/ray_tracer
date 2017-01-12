@@ -30,15 +30,9 @@ int main()
 	vector< shared_ptr<const Light> > lights;
 
 	// set camera resolution
-<<<<<<< HEAD
-	camera.SetResolution(320, 240);
+	camera.SetResolution(480, 320);
 	// set camera aperture
 	camera.SetAperture(2.5, 0.3, 64); 
-=======
-	camera.SetResolution(640, 480);
-	// set camera aperture
-	camera.SetAperture(2, 0.3, 100);
->>>>>>> f824b395d771189b0222538a161931c6abe71780
 
 	// declare analytic objects
 	shared_ptr<Sphere> sphere1 = make_shared<Sphere>(Point4(3.5, 1, 0.55), 0.5);
@@ -117,11 +111,7 @@ int main()
 	//lights.push_back(pl);
 	shared_ptr<AreaLight> al = make_shared<AreaLight>(Point4(3, 2, 3), Vector4(0, 0, -1), 1, 1);
 	al->SetIntensity(Color(70, 70, 70));
-<<<<<<< HEAD
-	al->SetSample(4, 4);
-=======
 	al->SetSample(6, 6);
->>>>>>> f824b395d771189b0222538a161931c6abe71780
 	lights.push_back(al);
 
 	// set variables

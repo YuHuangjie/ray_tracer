@@ -16,6 +16,10 @@ void PointLight::Illuminate(
 	vector<Color> &radians,
 	vector<double> &dist) const
 {
+	lightDir.clear();
+	radians.clear();
+	dist.clear();
+
 	Vector4 dir = P - position;
 	double distance = dir.Norm();
 	lightDir.push_back(dir.NormalizedVec());
