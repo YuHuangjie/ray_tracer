@@ -31,7 +31,7 @@ int main()
 	// set camera resolution
 	camera.SetResolution(640, 480);
 	// set camera aperture
-	camera.SetAperture(5.5, 1.5, 6000);
+	camera.SetAperture(5.5, 0.5, 100);
 
 	// set indirect lighting samples
 	renderer.SetIndirectDiffuseSample(128);
@@ -103,7 +103,7 @@ int main()
 	objects.push_back(bunny_last);
 
 	 //add an area light
-	//shared_ptr<AreaLight> al = make_shared<AreaLight>(Point4(5, 3, 0), Vector4(0, -1, 0), 4, 4);
+	//shared_ptr<AreaLight> al = make_shared<AreaLight>(Point4(5, 3, -2), Vector4(0, -1, 0), 4, 4);
 	//al->SetIntensity(Color(60, 60, 60));
 	//al->SetSample(10, 10);
 	//shared_ptr<PointLight> pl = make_shared<PointLight>(Point4(2, 2, 0));
@@ -130,9 +130,9 @@ int main()
 	uint16_t W = camera.GetWidth();
 	uint16_t H = camera.GetHeight();
 	Image photo(W, H);
-	int sample = 3;
+	int sample = 4;
 	bool indirectLighting = false;
-	uint16_t maxThreadCount = 7;
+	uint16_t maxThreadCount = 8;
 	Color tc[32];
 	thread t[32];
 

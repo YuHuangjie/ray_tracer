@@ -245,10 +245,10 @@
     <ClCompile Include="Color.cpp">
       <Filter>render\Color</Filter>
     </ClCompile>
-    <ClCompile Include="main_basic_render.cpp" />
     <ClCompile Include="CookTorrance.cpp">
       <Filter>render\cook_torrance</Filter>
     </ClCompile>
+    <ClCompile Include="main_mesh_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="result\temp.png" />
